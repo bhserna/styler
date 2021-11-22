@@ -9,10 +9,6 @@ class Styler::Style
     @styles = styles
   end
 
-  def inspect
-    "<Styler::Style[#{collection.path}.#{name}]#{to_a}>"
-  end
-
   def ==(other)
     self.class == other.class &&
       name == other.name &&

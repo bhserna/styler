@@ -4,8 +4,8 @@ require_relative "style"
 class Styler::Collection < SimpleDelegator
   attr_reader :name, :style_names, :collection_names
 
-  def initialize(parent, name)
-    super(parent)
+  def initialize(parent = nil, name = :default)
+    super(parent) if parent
     @name = name
     @style_names = []
     @collection_names = []
@@ -44,18 +44,6 @@ class Styler::Collection < SimpleDelegator
         instance_exec(*args, &block)
       end
     end
-  end
-
-  def path
-    if __getobj__ == Styler
-      "#{name}"
-    else
-      "#{__getobj__.path}.#{name}"
-    end
-  end
-
-  def inspect
-    "<Styler::Collection[#{path}]>"
   end
 
   def repeted_styles
