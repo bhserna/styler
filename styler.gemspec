@@ -14,5 +14,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.require_paths = ["lib"]
-  spec.files = Dir["lib/**/*", "MIT-LICENSE", "README.md"]
+  spec.files = Dir["lib/**/*", "LICENSE", "README.md"]
 end
