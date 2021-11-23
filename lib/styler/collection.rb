@@ -46,6 +46,12 @@ class Styler::Collection < SimpleDelegator
     end
   end
 
+  def copy_styles_from(collection:)
+    collection.styles.each do |style|
+      style(style.name, style.to_a)
+    end
+  end
+
   def repeted_styles
     nested_styles
       .group_by(&:to_a)
