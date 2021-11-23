@@ -84,7 +84,7 @@ RSpec.describe Styler, "style" do
     expect(subject.default_color(project).to_s).to eq "bg_blue"
   end
 
-  it "using styles that need arguments" do
+  it "using styles that need arguments but already defined" do
     project = { color: "blue" }
 
     subject = described_class.new do
@@ -99,6 +99,25 @@ RSpec.describe Styler, "style" do
       style :title, [default_color(project), "pa3"]
     end
 
-    expect(subject.title.to_s).to eq "bg_blue pa3"
+    expect(subject.title(project).to_s).to eq "bg_blue pa3"
+  end
+
+  it "using styles that need arguments" do
+    subject = described_class.new do
+      style :default_color do |project|
+        if project[:color] == "blue"
+          ["bg_blue"]
+        else
+          ["bg_red"]
+        end
+      end
+
+      style :title do |project|
+        [default_color(project), "pa3"]
+      end
+    end
+
+    project = { color: "blue" }
+    expect(subject.title(project).to_s).to eq "bg_blue pa3"
   end
 end
