@@ -1,8 +1,9 @@
 class Styler::Collection < SimpleDelegator
-  attr_reader :name, :style_names, :collection_names
+  attr_reader :parent, :name, :style_names, :collection_names
 
   def initialize(parent = nil, name = :default)
     super(parent) if parent
+    @parent = parent
     @name = name
     @style_names = []
     @collection_names = []
@@ -47,6 +48,11 @@ class Styler::Collection < SimpleDelegator
     collection.styles.each do |style|
       style(style.name, style.to_a)
     end
+  end
+
+  def path
+    return "root" if parent.nil?
+    "#{parent.path}.#{name}"
   end
 
   def repeted_styles
