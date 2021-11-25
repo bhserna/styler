@@ -1,4 +1,10 @@
-require_relative "styler/collection"
+require "delegate"
+
+require "styler/version"
+
+require "styler/collection"
+require "styler/style"
+require "styler/style_substraction"
 
 module Styler
   def self.new(&block)

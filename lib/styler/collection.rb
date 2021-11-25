@@ -1,6 +1,3 @@
-require "delegate"
-require_relative "style"
-
 class Styler::Collection < SimpleDelegator
   attr_reader :name, :style_names, :collection_names
 

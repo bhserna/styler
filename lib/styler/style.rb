@@ -1,5 +1,3 @@
-require_relative "style_substraction"
-
 class Styler::Style
   attr_reader :collection, :name, :styles
 
