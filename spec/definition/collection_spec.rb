@@ -104,5 +104,8 @@ RSpec.describe Styler, "collection" do
 
     project = { color: "blue" }
     expect(subject.buttons(project).default.to_s).to eq "pa3 blue"
+
+    project = { color: "red" }
+    expect(subject.buttons(project).default.to_s).to eq "pa3 red"
   end
 end

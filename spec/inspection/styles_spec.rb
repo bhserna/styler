@@ -9,6 +9,16 @@ RSpec.describe Styler, "#styles" do
     expect(subject.styles).to match_array [subject.btn]
   end
 
+  it "with style with arguments" do
+    subject = described_class.new do
+      style :btn do |color|
+        [:pa3, color]
+      end
+    end
+
+    expect(subject.styles).to match_array [subject.btn]
+  end
+
   it "with one collection" do
     subject = described_class.new do
       style :btn, [:pa3, :blue]

@@ -62,4 +62,17 @@ RSpec.describe Styler, "#collections" do
 
     expect(subject.collections).to match_array [subject.headers]
   end
+
+  it "with collection wiht arguments" do
+    subject = described_class.new do
+      collection :headers do
+      end
+
+      collection :buttons do |color|
+        style :btn, ["pa3", color]
+      end
+    end
+
+    expect(subject.collections).to match_array [subject.headers, subject.buttons]
+  end
 end

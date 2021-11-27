@@ -16,9 +16,15 @@ class Styler::Collection < SimpleDelegator
   def style(name, styles = nil, &block)
     @style_names << name
 
-    define_singleton_method(name) do |*args|
-      styles ||= block.call(*args)
-      Styler::Style.new(self, name, styles)
+    if styles
+      define_singleton_method(name) do |*args|
+        Styler::Style.new(self, name, styles)
+      end
+    else
+      define_singleton_method(name) do |*args|
+        styles = instance_exec(*args, &block)
+        Styler::Style.new(self, name, styles)
+      end
     end
   end
 

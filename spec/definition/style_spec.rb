@@ -82,6 +82,9 @@ RSpec.describe Styler, "style" do
 
     project = { color: "blue" }
     expect(subject.default_color(project).to_s).to eq "bg_blue"
+
+    project = { color: "red" }
+    expect(subject.default_color(project).to_s).to eq "bg_red"
   end
 
   it "using styles that need arguments but already defined" do
