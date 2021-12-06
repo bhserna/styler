@@ -3,7 +3,7 @@
 require_relative "lib/styler/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "styler"
+  spec.name          = "ruby_styler"
   spec.version       = Styler::VERSION
   spec.authors       = ["Benito Horacio Serna Sandoval"]
   spec.email         = ["bhserna@gmail.com"]

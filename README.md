@@ -7,7 +7,7 @@ A tool for styling html by composing css utility classes, like Tachyons.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "styler", github: "bhserna/styler"
+gem "ruby_styler"
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install styler
+    $ gem install ruby_styler
 
 ## Usage
 
