@@ -288,8 +288,8 @@ styles = Styler.new do
   end
 end
 
-styler.theme("v1").buttons.default.to_s # => "pa3 blue"
-styler.theme("v2").buttons.default.to_s # => "pa3 red"
+styles.theme("v1").buttons.default.to_s # => "pa3 blue"
+styles.theme("v2").buttons.default.to_s # => "pa3 red"
 ```
 
 ### Copy styles from collection
