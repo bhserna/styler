@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ### Define styles
 
-You can declare styles with a name and an already defined css class, for example if you define a `style`
+You can declare styles with a name and an already defined css class, for example you define a `style`
 named `btn`, like this...
 
 ```ruby
@@ -31,7 +31,7 @@ styles = Styler.new do
 end
 ```
 
-That will build and `styles` object where you can call `btn` on it...
+This will build a `styles` object, which you can then call `btn` on...
 
 ```ruby
 styles.btn.to_s # => "white bg_blue"
@@ -43,13 +43,13 @@ You would be able to use it like this in your erb files...
 <button class="<%= styles.btn %>">My button</button>
 ```
 
-or in haml...
+Likewise in haml...
 
 ```haml
 %button{class: styles.btn} My button
 ```
 
-To output...
+Which would output in HTML...
 
 ```html
 <button class="white bg_blue">My button</button>
@@ -57,7 +57,7 @@ To output...
 
 ### Compose styles
 
-You can define many of this styles and compose them...
+You can define many of these styles and compose them...
 
 ```ruby
 styles = Styler.new do
@@ -71,16 +71,16 @@ end
 %button{class: styles.blue_btn} My button
 ```
 
-And the output would be...
+This would output to HTML as...
 
 ```html
 <button class="padding3 margin3">My button</button>
 <button class="padding3 margin3 white bg_blue">My button</button>
 ```
 
-### Substract styles
+### Subtract styles
 
-By composing your styles you can also substract classes from previous styles, like this...
+By composing styles, classes can be subtracted from ones previously declared. Below, `bg_blue` is removed from `:default`, and `bg_red` is added, creating `:danger`...
 
 ```ruby
 styles = Styler.new do
@@ -94,24 +94,24 @@ styles.danger.to_s # => "pa3 white bg_red"
 
 ### Passing arguments to styles
 
-You can also define styles that expect an argument, to help you decide which styles to display, like this...
+You can also define styles that expect an argument, which will determine the styles to render...
 
 ```ruby
 styles = Styler.new do
   style :default_color do |project|
     if project[:color] == "blue"
-      ["bg_blue"]
+      ["bg_blue", "border_blue", "text_blue"]
     else
-      ["bg_red"]
+      ["bg_white", "border_black", "text_black"]
     end
   end
 end
 
 project = { color: "blue" }
-styles.default_color(project).to_s # => "bg_blue"
+styles.default_color(project).to_s # => "bg_blue border_blue text_blue"
 ```
 
-And you can use this styles to build other styles, like this...
+Styles can be used as a template to build other styles...
 
 ```ruby
 project = { color: "blue" }
@@ -121,7 +121,7 @@ styles = Styler.new do
     if project[:color] == "blue"
       ["bg_blue"]
     else
-      ["bg_red"]
+      ["bg_white"]
     end
   end
 
@@ -131,7 +131,7 @@ end
 styles.title(project).to_s # => "bg_blue pa3"
 ```
 
-Or like this...
+Or as a block...
 
 ```ruby
 styles = Styler.new do
@@ -154,7 +154,7 @@ styles.title(project).to_s # => "bg_blue pa3"
 
 ### Define collections
 
-You can define collections as "namespaces" for your styles...
+Collections can be used as "namespaces" for styles...
 
 ```ruby
 styles = Styler.new do
@@ -172,7 +172,7 @@ styles.buttons.danger.to_s # => "pa3 red"
 
 ### Nested collections
 
-You can define nested collections to build complete themes...
+Nested collections allow the creation of complete themes...
 
 ```ruby
 styles = Styler.new do
@@ -193,9 +193,9 @@ styles.v1.buttons.default.to_s # => "pa3 blue"
 styles.v2.buttons.default.to_s # => "pa3 red"
 ```
 
-### Define collection with arguments
+### Collections with arguments
 
-Like with the styles, you can define collections that require arguments, like this..
+Similar to styles, collections can also require arguments...
 
 ```ruby
 styles = Styler.new do
@@ -238,64 +238,63 @@ styles.theme.buttons.default.to_s # => "pa3 blue"
 
 ```ruby
 styles = Styler.new do
-  collection :v1 do
+  collection :dark do
     collection :buttons do
-      style :default, ["pa3", "blue"]
+      style :default, ["bg_black", "border_gray", "text_white"]
     end
   end
 
-  collection :v2 do
+  collection :light do
     collection :buttons do
-      style :default, ["pa3", "red"]
+      style :default, ["bg_white", "border_black", "text_black"]
     end
   end
 
   collection_alias :theme do |current_version|
-    if current_version == "v1"
-      v1
+    if current_version == "dark"
+      dark
     else
-      v2
+      light
     end
   end
 end
 
-styles.theme("v1").buttons.default.to_s # => "pa3 blue"
-styles.theme("v2").buttons.default.to_s # => "pa3 red"
+styles.theme("dark").buttons.default.to_s # => "bg_black border_gray text_white"
+styles.theme("light").buttons.default.to_s # => "bg_white border_black text_black"
 ```
 
 ### Select a collection from other styler
 
 ```ruby
-v1 = Styler.new do
+dark = Styler.new do
   collection :buttons do
-    style :default, ["pa3", "blue"]
+    style :default, ["bg_black", "border_gray", "text_white"]
   end
 end
 
-v2 = Styler.new do
+light = Styler.new do
   collection :buttons do
-    style :default, ["pa3", "red"]
+    style :default, ["bg_white", "border_black", "text_black"]
   end
 end
 
 styles = Styler.new do
   collection_alias :theme do |current_version|
-    if current_version == "v1"
-      v1
+    if current_version == "dark"
+      dark
     else
-      v2
+      light
     end
   end
 end
 
-styles.theme("v1").buttons.default.to_s # => "pa3 blue"
-styles.theme("v2").buttons.default.to_s # => "pa3 red"
+styles.theme("dark").buttons.default.to_s # => "bg_black border_gray text_white"
+styles.theme("light").buttons.default.to_s # => "bg_white border_black text_black"
 ```
 
 ### Copy styles from collection
 
-If you need to use the styles from other collection, but you need to override
-some of them, you can copy the styles and then override what you want.
+Styles from an existing collection can be copied then overidden and modified.
 
 ```ruby
 styles = Styler.new do
@@ -320,7 +319,7 @@ expect(styles.v2.buttons.danger.to_s).to eq "pa3 orange"
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt for experimentation.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
